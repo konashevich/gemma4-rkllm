@@ -1,0 +1,1760 @@
+28/08/2025, 12:38
+
+CM3588 - FriendlyELEC WiKi
+
+CM3588
+From FriendlyELEC WiKi
+查看中文
+
+Contents
+1 Introduction
+2 Hardware Spec
+3 Diagram, Layout and Dimension
+3.1 CM3588
+3.2 CM3588 Plus
+3.3 Carrier Board
+4 Get Started
+4.1 Essentials You Need
+4.2 TF Cards We Tested
+4.3 Configure parameters for serial port
+4.4 Install OS
+4.4.1 Downloads
+4.4.1.1 Official image
+4.4.1.2 Tools (optional)
+4.4.2 Flashing the OS to the microSD card
+4.4.3 Install OS to eMMC
+4.4.3.1 Option 1: Install OS via TF Card
+4.4.3.1.1 Flash Official OS to eMMC
+4.4.3.1.2 Flash third party OS (Image file) to eMMC
+4.4.3.2 Option 2: Install OS on Web Page
+4.4.3.3 Option 3: Install OS via USB
+4.4.3.3.1 Step 1: Download the required files and install the USB driver
+4.4.3.3.2 Step 2: Connect CM3588 to PC and Enter Installation Mode
+4.4.3.3.3 Step 3: Launch RKDevTool
+4.4.3.3.4 Step 4: Erase eMMC
+4.4.3.3.5 Step 5: Begin Flashing
+4.4.4 Installing the System to M.2 or USB Drive
+5 Getting Started with OpenMediaVault
+5.1 Introduction to OpenMediaVault
+6 Work with Ubuntu 24.04 Desktop
+6.1 Introduction to Ubuntu 24.04 Desktop
+7 Work with Android
+7.1 WiFi models supported by Android
+7.1.1 M.2 WiFi Module
+7.1.1.1 Usb Dongle
+7.2 Bluetooch models supported by Android
+7.2.1 Bluetooth Adapters
+7.2.2 Bluetooth Remote
+7.3 How to use ADB
+7.3.1 USB connection
+7.3.2 For Android Tablet
+7.3.3 For Android TV
+7.3.4 Using ADB
+7.3.5 Using ADB over the network
+7.4 How to Change Default Launcher in Android TV
+7.5 Wired networks on Android
+7.6 EC20 4G LTE module on Android
+8 Work with Debian11 Desktop
+8.1 Introduction to Debian11 Desktop
+9 Work with FriendlyCore
+9.1 FriendlyCore User Account
+9.2 Update Software Packages
+9.3 Setup Network Configurations
+9.3.1 Set static IP address
+9.3.2 Set a DNS
+9.3.3 Set up to use another network interface
+9.4 Setup Wi-Fi
+9.5 Install the kernel-header package
+9.6 Delete Qt5 and related files
+10 How to Compile
+10.1 Setup Development Environment
+10.1.1 Method 1: Using docker to cross-compile
+10.1.2 Method 2: Setup build environment on the host machine
+10.1.2.1 Install required packages
+10.1.2.2 Setting the compiler path
+10.2 Build Openwrt/Friendlywrt
+10.2.1 Download Code
+10.2.1.1 FriendlyWrt 24.10
+10.2.1.2 FriendlyWrt 23.05
+10.2.2 First compilation step
+10.2.3 Secondary compilation steps
+10.2.4 Build u-boot only
+10.2.5 Build kernel only
+10.2.6 Build friendlywrt only
+https://wiki.friendlyelec.com/wiki/index.php/CM3588
+
+1/26
+
+28/08/2025, 12:38
+
+CM3588 - FriendlyELEC WiKi
+
+10.3 Build Buildroot
+10.4 Build Other Linux
+10.4.1 Kernel and u-boot versions
+10.4.2 Build kernel linux-v6.1.y
+10.4.3 Build u-boot v2017.09
+10.4.4 Running the build
+10.4.4.1 Install to target board
+10.4.4.2 Packaging and creating an SD image
+10.4.4.3 USB flashing
+10.4.4.3.1 Linux
+10.5 Build the code using scripts
+10.5.1 Download scripts and image files
+10.5.2 Compile the kernel
+10.5.3 Compile the kernel headers
+10.5.4 Compile the uboot
+10.5.5 Generate new image
+10.6 Building AOSP from source
+10.6.1 Hardware and Software Requirements
+10.6.2 Download source from the netdrive
+10.6.3 Tablet profile build (First Build)
+10.6.4 TV profile build (First Build)
+10.6.5 Second build
+10.6.6 Running your AOSP build
+10.6.6.1 USB Flashing
+10.6.6.2 SD-to-eMMC Flashing
+10.6.7 Pack the new SD Image
+11 Using On-Board Hardware Resources
+11.1 VPU
+11.2 NPU
+11.3 DTS files
+11.4 GPIO
+11.5 Serial Port
+11.6 ADC
+11.7 PWM
+11.7.1 NanoPC-T6
+11.7.2 NanoPi-R6C
+11.8 RTC
+11.9 Watch dog
+12 Backup rootfs and create custom SD image (to burn your application into other boards)
+12.1 Backup rootfs
+12.2 Making a bootable SD card from a root filesystem
+13 Connect NVME SSD High Speed Hard Disk
+13.1 Detection of SSD
+13.2 Partition of SSD
+13.3 Format Section to EXT4
+13.4 Auto Mount SSD on System Startup
+14 Common Linux-based operating system operations
+14.1 Using ADB on Linux Systems
+14.1.1 Enabling ADB in Buildroot System
+14.1.2 Enabling ADB in Ubuntu and Debian Systems
+14.1.3 How to Connect
+14.2 Install Kernel Headers
+14.3 Update Kernel to Latest Version
+14.4 Setting Kernel Boot Parameters (eMMC/UFS Only)
+15 Unbricking Method
+15.1 Windows Users
+15.1.1 Download Required Files
+15.1.2 Enter Maskrom Mode to Erase the Storage Device
+15.2 Linux Users
+15.2.1 Download the Required Files
+15.2.2 Installation for upgrade_tool
+15.2.3 Enter Maskrom Mode to Erase the Storage Device
+15.3 Mac Users
+16 How to use CAM415 MIPI Camera
+17 Link to Rockchip Resources
+18 Schematic, PCB CAD File
+19 Update Logs
+19.1 2023-11-20
+19.2 2023-11-28
+19.3 2023-12-13
+
+1 Introduction
+The CM3588 and is a high performance ARM module designed and developed by FriendlyElec. It is based on Rockchip’s RK3588 SoC. The regular version has
+4/8/16GB LPDDR4x or 32GB LPDDR5 RAM, 32GB/64GB/256GB eMMC Flash(optional), The CM3588 have four 100-pin connectors, exposing nearly all IO
+resources.
+The CM3588 computing module boasts a variety of peripherals and expansion interfaces. It can connect to a carrier borad supporting 4 NVMe high-speed solidstate drives with read/write speeds of up to 1GB/s. Additionally, it includes dual HDMI-Out display interfaces, 1 HDMI-In interface, 2 USB3.0 ports, 1 USB2.0
+port, a 2.5G Ethernet interface, and more.
+The carrier borad (CM3588 NAS Kit) have 2 HDMI output interfaces and 1 HDMI In interface can decode and play videos in formats such as up to 8K60p
+H.265/VP9 and 8K30p H.264, with the ability to record 4K60p H.265 videos.
+The CM3588 offers the OpenMediaVault NAS system and supports various operating systems including Android, Ubuntu, Debian, Buildroot, and OpenWrt. It
+has well established software support. It is a perfect platform for startups to develop applications and prototypes in facial detection, machine vision, VR,
+autonomous-driving, deep learning, AI and etc.
+https://wiki.friendlyelec.com/wiki/index.php/CM3588
+
+2/26
+
+28/08/2025, 12:38
+
+CM3588 - FriendlyELEC WiKi
+
+2 Hardware Spec
+SoC: Rockchip RK3588
+CPU: Quad-core ARM Cortex-A76(up to 2.4GHz) and quad-core Cortex-A55 CPU (up to 1.8GHz)
+GPU: Mali-G610 MP4, compatible with OpenGLES 1.1, 2.0, and 3.2, OpenCL up to 2.2 and Vulkan1.2
+VPU: 8K@60fps H.265 and VP9 decoder, 8K@30fps H.264 decoder, 4K@60fps AV1 decoder,
+8K@30fps H.264 and H.265 encoder
+NPU: 6TOPs, supports INT4/INT8/INT16/FP16
+RAM: 64-bit 4GB/8GB/16GB LPDDR4X up to 2133MHz, 32GB LPDDR5 up to 2400MHz
+Flash: 0GB/64GB/256GB eMMC, at HS400 mode
+1 x microSD interface, support up to SDR104 mode
+1 x On-board PCIe 2.5G ethernet controller (RTL8125B)
+USB:
+2 x USB 3.1 Gen1 OTG which combo with DP display（up to 4Kp60）
+1 x USB 3.1 Gen1 Host
+2 x USB 2.0 Host
+PCIe:
+up to 4 x PCIe interfaces
+2 x PCIe 2.1 x1 and 2 x PCIe 3.0 x2
+or 2 x PCIe 2.1 x1 and 1 x PCIe 3.0 x4
+or 1 x PCIe 2.1 x1, 1 x PCIe 3.0 x2, and 2 x PCIe 3.0 x1
+or 4 x PCIe 3.0 x1
+HDMI output:
+2 x HDMI outputs which is compatible with HDMI2.1, HDMI2.0, and HDMI1.4 operation
+one support displays up to 7680x4320@60Hz, another one support up to 4Kp60
+Support RGB/YUV(up to 10bit) format
+HDMI input: 1 x HDMI input, up to 4Kp60
+MIPI RX:
+2 x 4lane MIPI DPHY CSI RX which support x4 mode or x2+x2 mode ,compatible with MIPI V1.2
+2 x 4lane MIPI_D/CPHY_RX
+MIPI TX:
+2 x 4-lane MIPI D-PHY/C-PHY Combo PHY TX, compatible with MIPI DPHY 2.0 or CPHY 1.1
+Codec:
+On-board ALC5616 Codec
+1 x stereo headphone output ( 20mW/CH, THD+N <= -80dB, 16Ohm Load )
+1 x single-end microphone input
+GPIO:
+up to 3 x SPIs, 7 x UARTs, 6 x I2Cs, 15 x PWMs, 3 x I2Ss, 1 x SDIO, 81 x GPIOs
+others:
+low power RTC (HYM8563TS) with backup battery input
+Support 38Khz IR input
+MASK button for eMMC update, reset button, Power button, and recovery mode button
+Debug UART,3.3V level, 1500000bps
+2 x GPIO Controlled LED (SYS, LED1)
+Power supply: 5~20VDC input, 20W max
+PCB: 8 Layers, CM3588 is 55x65x1.6mm, CM3588 Plus is 55x67.5x1.6mm.
+Stacking height: 6.6mm
+Connector: 4 x DF40C-100DP-0.4V(51), the mating connector is DF40HC(3.0)-100DS-0.4V(51)
+Ambient Operating Temperature: 0℃ to 70℃
+
+Front
+
+Back
+
+3 Diagram, Layout and Dimension
+3.1 CM3588
+Carrier Board Front
+
+Carrier Board Back
+
+https://wiki.friendlyelec.com/wiki/index.php/CM3588
+
+3/26
+
+28/08/2025, 12:38
+
+CM3588 - FriendlyELEC WiKi
+
+CM3588 2309 Schematic (https://wiki.friendlyelec.com/wiki/images/0/00/CM3588_2309_SCH.PDF)
+CM3588 2309 PCB CAD File (https://wiki.friendlyelec.com/wiki/images/f/f5/CM3588_2309_DXF.zip)
+CM3588 Pinout and Interfaces (https://wiki.friendlyelec.com/wiki/images/3/37/CM3588_Pinout_Interfaces.pdf)
+
+3.2 CM3588 Plus
+
+CM3588 Plus 2404 Schematic (https://wiki.friendlyelec.com/wiki/images/2/2b/CM3588_Plus_2404_SCH.pdf)
+CM3588 Plus 2404 PCB CAD File (https://wiki.friendlyelec.com/wiki/images/1/1e/CM3588_Plus_2404_DXF.zip)
+CM3588 Pinout and Interfaces (https://wiki.friendlyelec.com/wiki/images/3/37/CM3588_Pinout_Interfaces.pdf)
+
+3.3 Carrier Board
+Please click CM3588 NAS SDK Wiki page
+
+https://wiki.friendlyelec.com/wiki/index.php/CM3588
+
+4/26
+
+28/08/2025, 12:38
+
+CM3588 - FriendlyELEC WiKi
+
+4 Get Started
+4.1 Essentials You Need
+Before starting to use your CM3588 get the following items ready
+CM3588 Core Board
+https://wiki.friendlyelec.com/wiki/index.php/CM3588
+
+5/26
+
+28/08/2025, 12:38
+
+CM3588 - FriendlyELEC WiKi
+
+CM3588 NAS Kit Carrier Board
+MicroSD Card/TF Card: Class 10 or Above, minimum 8GB SDHC
+A DC 12V/2A power
+If you need to develop and compile,you need a computer that can connect to the Internet. It is recommended to install Ubuntu 20.04 64-bit system and use the
+following script to initialize the development environment, or use docker container:
+How to setup the Compiling Environment on Ubuntu bionic (https://github.com/friendlyarm/build-env-on-ubuntu-bionic)
+docker-cross-compiler-novnc (https://github.com/friendlyarm/docker-cross-compiler-novnc)
+
+4.2 TF Cards We Tested
+Refer to： TFCardsWeTested
+
+4.3 Configure parameters for serial port
+Use the following serial parameters:
+Baud rate
+
+1500000
+
+Data bit
+
+8
+
+Parity check None
+Stop bit
+
+1
+
+Flow control None
+
+4.4 Install OS
+4.4.1 Downloads
+4.4.1.1 Official image
+
+Visit download link (http://download.friendlyelec.com/CM3588) to download official image files (in the "01_Official images" directory).
+The table below lists all official images, the word 'XYZ' in image filename meaning:
+sd: Use it when you need to boot the entire OS from the SD card
+eflasher: Use it when you need to flash the OS to eMMC via TF card
+usb: Use it when you need to flash the OS to eMMC via USB
+
+https://wiki.friendlyelec.com/wiki/index.php/CM3588
+
+6/26
+
+28/08/2025, 12:38
+
+Icon
+
+CM3588 - FriendlyELEC WiKi
+
+Image Filename
+
+Version
+
+rk3588-XYZ-debian-bookworm-core6.1-arm64-YYYYMMDD.img.gz
+
+Kernel
+Version
+
+Description
+
+bookworm Debian 12 Core, command line only
+
+6.1.y
+
+rk3588-XYZ-debian-bullseye-minimalbullseye
+6.1-arm64-YYYYMMDD.img.gz
+
+Debian 11 Desktop, Xfce desktop, no pre-installed recommended software, supports HW
+acceleration
+
+6.1.y
+
+rk3588-XYZ-debian-bullseye-desktopbullseye
+6.1-arm64-YYYYMMDD.img.gz
+
+Debian 11 Desktop, Xfce desktop, pre-installed mpv, smplayer and chromium brower,
+supports HW acceleration
+
+6.1.y
+
+rk3588-XYZ-ubuntu-focal-desktop-6.1focal
+arm64-YYYYMMDD.img.gz
+
+Ubuntu 20.04 Desktop, LXQT desktop, pre-installed mpv, smplayer and chromium brower,
+supports HW acceleration
+
+6.1.y
+
+rk3588-XYZ-ubuntu-noble-desktop6.1-arm64-YYYYMMDD.img.gz
+
+noble
+
+Ubuntu 24.04 with GNOME and Wayland with recommended software
+
+6.1.y
+
+rk3588-XYZ-ubuntu-noble-minimal6.1-arm64-YYYYMMDD.img.gz
+
+noble
+
+Lightweight Ubuntu 24.04 with GNOME and Wayland
+
+6.1.y
+
+rk3588-XYZ-ubuntu-jammy-x11desktop-arm64-YYYYMMDD.img.gz
+
+jammy
+
+Ubuntu 22.04 with Xubuntu and X11, use Panfrost GPU driver
+
+6.1.y
+
+rk3588-XYZ-friendlycore-focal-6.1arm64-YYYYMMDD.img.gz
+
+focal
+
+FriendlyCore，command line only, pre-installed Qt5， based on Ubuntu core 20.04
+
+6.1.y
+
+rk3588-XYZ-android14YYYYMMDD.img.zip
+
+14
+
+Android 14 Tablet
+
+6.1.y
+
+rk3588-XYZ-androidtvYYYYMMDD.img.zip
+
+14
+
+Android 14 TV
+
+6.1.y
+
+rk3588-XYZ-android12YYYYMMDD.img.zip
+
+12
+
+Android 12 Tablet
+
+5.10.y
+
+rk3588-XYZ-buildroot-6.1-arm64YYYYMMDD.img.gz
+
+--
+
+Buildroot OS, base on Rockchip Linux SDK
+
+6.1.y
+
+rk3588-XYZ-openmediavault-6.1YYYYMMDD.img.gz
+
+Shaitan
+
+OpenMediaVault NAS system, base on Debian 12
+
+6.1.y
+
+rk3588-XYZ-proxmox-6.1YYYYMMDD.img.gz
+
+8.2.7
+
+Proxmox VE OS (Preview), base on Debian 12
+
+6.1.y
+
+rk3588-XYZ-friendlywrt-24.10YYYYMMDD.img.gz
+
+24.10
+
+FriendlyWrt, based on OpenWrt 24.10
+
+6.1.y
+
+rk3588-XYZ-friendlywrt-24.10-docker24.10
+YYYYMMDD.img.gz
+
+FriendlyWrt with Docker, based on OpenWrt 24.10
+
+6.1.y
+
+rk3588-XYZ-friendlywrt-23.05YYYYMMDD.img.gz
+
+FriendlyWrt, based on OpenWrt 23.05
+
+6.1.y
+
+FriendlyWrt with Docker, based on OpenWrt 23.05
+
+6.1.y
+
+Armbian for NanoPi M6 (https://www.armbian.com/nanopi-m6/)
+Armbian for NanoPC T6 (https://www.armbian.com/nanopct6/)
+Armbian for NanoPi R6S/R6C (https://www.armbian.com/nanopi-r6s/)
+Armbian for CM3588 (https://www.armbian.com/nanopc-cm3588-nas/)
+
+-
+
+23.05
+
+rk3588-XYZ-friendlywrt-23.05-docker23.05
+YYYYMMDD.img.gz
+Third Party Images
+Armbian
+
+-
+
+Other Image
+FriendlyWrt (Github Actions)
+
+24.10,23.05 FriendlyWrt (https://github.com/friendlyarm/Actions-FriendlyWrt/releases)
+
+6.1.y
+
+Alpine-Linux (Github Actions)
+
+-
+
+Alpine-Linux (https://github.com/friendlyarm/Actions-Alpine-Linux/releases)
+
+6.1.y
+
+rk3588-eflasher-multiple-osYYYYMMDD-25g.img.gz
+
+-
+
+It contains multiple OS image files, making it convenient for testing different operating
+systems, this image disables automatic flashing at startup; you will need to manually select
+the OS to flash.
+
+4.4.1.2 Tools (optional)
+
+Visit download link (http://download.friendlyelec.com/CM3588) to download tools (in the "05_Tools" directory).
+Filename
+
+Description
+
+win32diskimager.rar
+
+This program is designed to write a raw disk image to a removable device or backup a removable device to a raw image file
+
+SD Card Formatter
+
+A program (application) that allows easy and quick clear the SD card
+
+RKDevTool_v3.37_for_window.zip Rockchip flashing tool, for USB upgrade
+4.4.2 Flashing the OS to the microSD card
+Follow the steps below:
+Get an 8G microSD card;
+https://wiki.friendlyelec.com/wiki/index.php/CM3588
+
+7/26
+
+28/08/2025, 12:38
+
+CM3588 - FriendlyELEC WiKi
+
+Visit download link (http://download.friendlyelec.com/CM3588)to download image files (in the "01_Official images/01_SD card images" directory);
+Download the win32diskimager tool (in the "05_Tools" directory), or use your preferred tool;
+Extract the .gz format compressed file to get the .img format image file;
+Run the win32diskimager utility under Windows as administrator. On the utility's main window select your SD card's drive, the wanted image file and click on
+"write" to start flashing the SD card.
+Take out the SD and insert it to CM3588's microSD card slot;
+Power on CM3588 and it will be booted from your TF card, some models may require pressing the Power button to start;
+4.4.3 Install OS to eMMC
+4.4.3.1 Option 1: Install OS via TF Card
+
+This method firstly boots a mini Linux from a TF card and then automatically runs an EFlasher utility to install the OS to eMMC. You can connect your system to an
+HDMI monitor and watch its progress.
+This is optional. You can watch its progress by observing its LEDs as well:
+By default, flashing starts automatically upon power-up, so be sure to back up the data in eMMC. If you don't want it to start automatically, you can use image file with
+a filename containing the words 'multiple-os' and manually select the OS you want to flash on the interface.
+4.4.3.1.1 Flash Official OS to eMMC
+
+Follow the steps below:
+Get an SDHC card with a minimum capacity of 8G
+Visit download link (http://download.friendlyelec.com/CM3588)to download image files (in the "01_Official images/02_SD-to-eMMC images" directory) and
+win32diskimager tool (in the "05_Tools" directory);
+Extract the .gz format compressed file to get the .img format image file;
+Run the win32diskimager utility under Windows as administrator. On the utility's main window select your SD card's drive, the wanted image file and click on
+"write" to start flashing the SD card.
+Eject your SD card and insert it to CM3588’s microSD card slot.
+Turn on CM3588, it will boot from the SD card and automatically run EFlasher to install the OS to the board’s eMMC.
+After flashing is complete, eject the SD card from CM3588, CM3588 will automatically reboot and boot from eMMC.
+4.4.3.1.2 Flash third party OS (Image file) to eMMC
+
+Auto Install (Default Behavior)
+1) Download an “eflasher” firmware from network drive (http://download.friendlyelec.com/CM3588)(in the "01_Official images/02_SD-to-eMMC images" directory),
+extract it and install it to a TF card ;
+2) Eject and insert the TF card to your PC, after a “FriendlyARM” device shows up(Under Linux, it is a “FriendlyARM” directory), copy the image file ending with
+.raw or .gz into the directory (Note: if your file is in .img format, please rename it to .raw format).
+3) Open the eflasher.conf file on the TF card, set “autoStart=” to the name of your image file, such as:
+autoStart=openwrt-rockchip-armv8_nanopi-ext4-sysupgrade.img.gz
+
+In addition to third-party image, official image files which with the '-sd-' word in the filename are also supported, for example: rk3NNN-sd-friendlywrt-24.10YYYYMMDD.img.gz
+4) Eject the TF card, insert the TF card to CM3588, power it on it will automatically install your firmware. You can watch the installation progress by observing the
+LEDs’ status.
+4.4.3.2 Option 2: Install OS on Web Page
+
+Get a TF card which has been installed with FriendlyWrt, log in FriendlyWrt on the web page, click on “System” ->”eMMC Tools”. Click on “Select file” to select your
+wanted image file, either an official image (filename containing '-sd-') or a third party image. The file should be a “.gz” or “.img” file.
+After a file is selected, click on “Upload and Write” to start installing an OS.
+
+After installation is done, eject the SD card, the system will automatically reboot and load the OS from eMMC. After the OS begins to load, if the system LED is
+flashing and the network LED is on, it means the the OS has loaded successfully. If the OS is FriendlyWrt, you can click on “Go to Homepage” to enter the homepage.
+For official OS, you need select the file with the filename containing '-sd-', for example: rk3NNN-sd-friendlywrt-24.10-YYYYMMDD.img.gz, the compression file
+only supports the .gz format. If the file is too large, you can compress it into .gz format before uploading.
+
+https://wiki.friendlyelec.com/wiki/index.php/CM3588
+
+8/26
+
+28/08/2025, 12:38
+
+CM3588 - FriendlyELEC WiKi
+
+4.4.3.3 Option 3: Install OS via USB
+4.4.3.3.1 Step 1: Download the required files and install the USB driver
+
+Download the Rockchip USB driver (DriverAssitant_v5.12.zip) from the netdrive (http://download.friendlyelec.com/CM3588)/tools directory, extract it, and install it;
+Download the required OS package from the netdrive (http://download.friendlyelec.com/CM3588) (located in the "01_Official images/03_USB upgrade images"
+directory), extract it, and you will find that the firmware directory contains the Rockchip development tool and the preconfigured configuration files;
+4.4.3.3.2 Step 2: Connect CM3588 to PC and Enter Installation Mode
+
+1) Press and hold the “Mask” key, power on the board. After the status LED has been on for at least 3 seconds, release the Mask key;
+2) Use a USB C-to-A cable, connect CM3588 to a PC;
+
+4.4.3.3.3 Step 3: Launch RKDevTool
+
+Double-click "RKDevTool.exe" in the image directory to start the Rockchip development tool. If the development board is properly connected to your PC, the
+RKDevTool interface will display "Found One MASKROM Device".
+4.4.3.3.4 Step 4: Erase eMMC
+
+The erase operation is not mandatory—only required when the eMMC contains a different system. If the device fails to boot after flashing, you should erase the eMMC
+before reflashing.
+Steps to erase the eMMC:
+In the RKDevTool interface, open the "Advanced Function" tab.
+In the "Boot" field, select "MiniLoaderAll.bin", then click the "Download" button.
+Check "EMMC", click "Switch Storage", then click "EraseAll" to erase the eMMC.
+4.4.3.3.5 Step 5: Begin Flashing
+
+Firmware usually comes in one of two formats: a single image file (common for third-party firmware), or multiple partition images (used by FriendlyELEC).
+Instructions are provided below for both formats:
+Option 1: Flash firmware composed of multiple partition images
+In the RKDevTool interface, click "Download Image", then click the "Run" button. The flashing process will complete shortly, and the device will reboot automatically
+and boot the newly installed system from eMMC;
+Option 2: Flash firmware packaged as a single image file
+In the RKDevTool interface, click "Upgrade Firmware", then click the "Firmware" button. Select the image file you wish to flash, click "Upgrade", and wait for the
+process to complete. Upon completion, the device will reboot and boot the newly installed system from eMMC;
+4.4.4 Installing the System to M.2 or USB Drive
+You can use a TF card to boot the eFlasher system, allowing the boot and system to be installed on different storage devices. However, since the CPU doesn’t support
+booting directly from M.2 and USB devices, the system can be installed on M.2 and USB devices, but the boot must still be installed on eMMC or a TF card.
+Steps are as follows:
+Prepare a TF card with a capacity of 32GB or larger.
+Visit [the download link here](http://download.friendlyelec.com/CM3588) to download the firmware file named XXXX-eflasher-multiple-os-YYYYMMDD30g.img.gz (located in the “01_Official images/02_SD-to-eMMC images” directory).
+Flash the firmware to the TF card, connect the storage device you intend to use on CM3588, insert the TF card and power on, we need to perform the operations
+in the eFlasher GUI. If your CM3588 does not have a display interface, you can use VNC; refer to Using VNC to Operate eFlasher
+(https://wiki.friendlyelec.com/wiki/index.php/EFlasher#Remote_Control_eFlasher_via_VNC).
+In the eFlasher GUI, select the OS to install, and in the OS settings interface, choose the destination for boot installation (typically eMMC), then choose the
+destination for system installation (options include eMMC, M.2 hard drive, USB storage, etc.), as shown below:
+
+https://wiki.friendlyelec.com/wiki/index.php/CM3588
+
+9/26
+
+28/08/2025, 12:38
+
+CM3588 - FriendlyELEC WiKi
+
+If no eMMC is available, the TF card can serve as the boot by inserting another TF card into the USB port via a USB card reader and selecting it as the boot
+destination, enabling booting from the TF card with the system stored on the M.2 or USB drive.
+After flashing, eject the SD card from CM3588. If booting from eMMC, CM3588 will automatically restart into the newly flashed system. If boot installation is
+on a TF card, power off, insert the boot TF card, and power on again.
+For a more detailed installation guide, please refer to this link
+(https://wiki.friendlyelec.com/wiki/index.php/EFlasher#Installing_the_System_to_M.2_or_USB_Drive_.28Rockchip_Platform_Only.29).
+
+5 Getting Started with OpenMediaVault
+5.1 Introduction to OpenMediaVault
+OpenMediaVault is the next-generation Network Attached Storage (NAS) solution based on Debian Linux. It includes services such as SSH, (S)FTP, SMB/CIFS,
+DAAP media server, RSync, BitTorrent client, and more. Due to its modular framework design, it can be enhanced through plugins.
+OpenMediaVault version：
+OS: Debian 12
+OpenMediaVault: 7.0.5-1 (Sandworm)
+Others: built-in OMV-Extras
+
+Please refer to the following link for details：
+Getting Started with OpenMediaVault
+
+6 Work with Ubuntu 24.04 Desktop
+6.1 Introduction to Ubuntu 24.04 Desktop
+Ubuntu 24.04 Desktop has the following features：
+Uses GNOME 46 as default desktop;
+Uses Wayland as default display server;
+Mali GPU-based OpenGL ES support;
+Support Rockhip MPP video hard coding and hard decoding;
+Pre-installed mpv and kodi, support video hardware decoding;
+Compatible with Docker and Plex server;
+
+Refer to：
+Ubuntu Noble Desktop
+
+7 Work with Android
+Android include the following features:
+There are two versions, TV and Tablet;
+Support infrared remote control (only for models with Ir Receiver);
+https://wiki.friendlyelec.com/wiki/index.php/CM3588
+
+10/26
+
+28/08/2025, 12:38
+
+CM3588 - FriendlyELEC WiKi
+
+Support Bluetooth remote control (requires USB or M.2 Bluetooth module);
+Support wired network;
+Support WiFi (requires external USB or M.2 WIFI module);
+Support video hard decoding;
+
+7.1 WiFi models supported by Android
+7.1.1 M.2 WiFi Module
+RTL8822CE
+7.1.1.1 Usb Dongle
+
+RTL8821CU (Vid: 0BDA, Pid: C811) (Test sample:TP-Link TL-WDN5200H)
+RTL8812AU (Vid: 0BDA, Pid: 8812)
+MediaTek MT7662 (Vid: 0E8D, Pid: 7612) (Test sample:COMFAST CF-WU782AC V2)
+
+7.2 Bluetooch models supported by Android
+7.2.1 Bluetooth Adapters
+RTL8822CE
+RTL8761B
+CSR8510 A10 Bluetooth Dongle 0a12:0001
+7.2.2 Bluetooth Remote
+Amazon Fire TV Remote
+
+7.3 How to use ADB
+7.3.1 USB connection
+Please note: After turning on the ADB, the USB3 port will work in Device mode, if you need to connect a device such as a USB stick, you need to turn off the
+ADB and restart the board
+In general, ADB is disabled by default, please follow the steps below to enable it:
+Connect your development board to your computer using a USB A-to-A data cable, referring to the figure below, be sure to connect it to the USB port closest to
+the edge:
+7.3.2 For Android Tablet
+Go to Settings -> About tablet -> tap the "Build number" at the bottom of the screen 7 times in a row;
+Go to Settings -> System -> Advance -> Developer options, check USB-Debugging, and then reboot;
+To use ADB over the network, you need to connect to WiFi first, then enable Wireless debugging. In the prompt "Allow wireless debugging on the network",
+select "Always allow on this network", and then click "Allow".
+7.3.3 For Android TV
+Click the Settings icon -> Device Preferences -> About -> tap the "Android TV OS build" at the bottom of the screen 7 times in a row;
+Click the Settings icon -> Device Preferences -> Developer options, check USB-Debugging, and then reboot;
+To use ADB over the network, on Android TV, which supports both WiFi and wired networks, enable network ADB by checking "Internet ADB" on the
+"Developer options" UI.
+7.3.4 Using ADB
+Install ADB drivers and commands based on your operating system;
+Normally, the Android status bar will prompt "USB debugging connected", indicating that ADB has been enabled. Enter the following command on your
+computer to check the connection：
+$ adb devices
+List of devices attached
+27f7a63caa3faf16
+device
+
+https://wiki.friendlyelec.com/wiki/index.php/CM3588
+
+11/26
+
+28/08/2025, 12:38
+
+CM3588 - FriendlyELEC WiKi
+
+Enter adb shell:
+$ adb shell
+nanopi3:/ $
+
+7.3.5 Using ADB over the network
+On an Android Tablet, go to Settings -> System -> Advance -> Developer options, then click on Wireless debugging to view the IP address and port.
+The default network ADB port for Android TV is 5555.
+Assuming the IP address and port displayed on the Wireless debugging interface are 192.168.1.167:45055, the ADB commands are as follows:
+To connect to the device:
+$ adb connect 192.168.1.167:45055
+
+connected to 192.168.1.167:45055
+To enter ADB shell:
+$ adb shell
+nanopi3:/ $
+
+If there are multiple devices, use the -s parameter to specify the device's IP and port, as shown below:
+$ adb -s 192.168.1.167:45055 shell
+nanopi3:/ $
+
+7.4 How to Change Default Launcher in Android TV
+Refer to the previous section to enable adb
+For example, install the third-party launcher Emotn UI via APK, visit the website https://app.emotn.com/ui/ to download the APK, and then install it using ADB:
+$ adb install com.oversea.aslauncher_1.0.9.0_5094.apk
+Performing Streamed Install
+Success
+
+After the installation is complete, launch it, and then enter the following ADB command to obtain its package name:
+$ adb shell dumpsys window | grep mCurrentFocus
+mCurrentFocus=Window{7a950fb u0 com.oversea.aslauncher/com.oversea.aslauncher.ui.main.MainActivity}
+
+As you can see, the package name of Emotn UI is com.oversea.aslauncher, set it as the default launcher:
+$ adb shell pm set-home-activity com.oversea.aslauncher
+Success
+
+Then comes the critical step, you need to disable the native launcher using the following command:
+$ adb shell pm disable-user --user 0 com.google.android.tvlauncher
+Package com.google.android.tvlauncher new state: disabled-user
+
+Finally, restart the device to see the effect, the device should boot directly into Emotn UI:
+$ adb shell reboot
+
+From now on, if you want to install another launcher, you can switch between them through the GUI. for example, after installing FLauncher, you can enter the
+following settings interface to set FLauncher as the default launcher: Settings -> Device Preferences -> Advanced setting -> Default Launcher:
+
+7.5 Wired networks on Android
+Any network port can connect to the network via DHCP
+https://wiki.friendlyelec.com/wiki/index.php/CM3588
+
+12/26
+
+28/08/2025, 12:38
+
+CM3588 - FriendlyELEC WiKi
+
+If you want to configure a static IP, only eth0 interface is supported
+Some applications may have compatibility issues and report no network connection error, but the network is actually connected
+
+7.6 EC20 4G LTE module on Android
+EC20 support is disabled by default, you can check the status with the following command, if the EC20 is disabled, the number 1 will be displayed:
+su
+getprop persist.vendor.radio.no_modem_board
+
+To enable EC20, use the following command (takes effect after a reboot):
+su
+setprop persist.vendor.radio.no_modem_board 0
+
+8 Work with Debian11 Desktop
+8.1 Introduction to Debian11 Desktop
+Debian11 Desktop is a light-weighted debian desktop system，it has the following features：
+Uses Xfce as default desktop;
+Mali GPU-based OpenGL support;
+Support Rockhip MPP video hard coding and hard decoding;
+Pre-installed mpv and smplayer, both support 4K video hardware decoding;
+Pre-installed Chromium browser, support vpu/gpu hardware acceleration (video hard decoding limited to h264/mp4 format);
+Compatible with Plex Server and Docker;
+
+Refer to：
+Debian Bullseye Desktop
+
+9 Work with FriendlyCore
+9.1 FriendlyCore User Account
+Non-root User:
+User Name: pi
+Password: pi
+
+Root:
+User Name: root
+Password: fa
+
+9.2 Update Software Packages
+$ sudo apt-get update
+
+9.3 Setup Network Configurations
+9.3.1 Set static IP address
+By default "eth0" is assigned an IP address obtained via dhcp. If you want to change the setting you need to change the following file:
+vi /etc/network/interfaces.d/eth0
+
+For example if you want to assign a static IP to it you can run the following commands:
+
+https://wiki.friendlyelec.com/wiki/index.php/CM3588
+
+13/26
+
+28/08/2025, 12:38
+
+CM3588 - FriendlyELEC WiKi
+
+auto eth0
+iface eth0 inet static
+address 192.168.1.231
+netmask 255.255.255.0
+gateway 192.168.1.1
+
+9.3.2 Set a DNS
+You also need to modify the following file to add the DNS configuration:
+vi /etc/systemd/resolved.conf
+
+For example, set to 192.168.1.1:
+[Resolve]
+DNS=192.168.1.1
+
+Restart the systemd-resolved service with the following command:
+sudo systemctl restart systemd-resolved.service
+sudo systemctl enable systemd-resolved.service
+
+9.3.3 Set up to use another network interface
+To change the setting of "eth1" you can add a new file similar to eth0's configuration file under the /etc/network/interfaces.d/ directory.
+
+9.4 Setup Wi-Fi
+First, use the following command to check if Network-Manager is installed on your system:
+which nmcli
+
+If you have installed it, refer to this link to connect to WiFi: Use NetworkManager to configure network settings, If you do not have Network-Manager installed on your
+system, please refer to the following method to configure WiFi,
+By default the WiFi device is "wlan0". You need to create a configuration file under "/etc/network/interfaces.d/" for WiFi:
+vi /etc/network/interfaces.d/wlan0
+
+Here is a sample wlan0 file:
+auto lo
+iface lo inet loopback
+auto wlan0
+iface wlan0 inet dhcp
+wpa-driver wext
+wpa-ssid YourWiFiESSID
+wpa-ap-scan 1
+wpa-proto RSN
+wpa-pairwise CCMP
+wpa-group CCMP
+wpa-key-mgmt WPA-PSK
+wpa-psk YourWiFiPassword
+
+Please replace "YourWiFiESSID" and "YourWiFiPassword" with your WiFiESSID and password. After save and close the file you can connect to your WiFi source by
+running the following command:
+sudo systemctl daemon-reload
+sudo systemctl restart networking
+
+After you power on your board it will automatically connect to your WiFi source.
+Please note that if you use one TF card to boot multiple boards the WiFi device name will likely be named to "wlan1", "wlan2" and etc. You can reset it to "wlan0" by
+deleting the contents of the following file and reboot your board: /etc/udev/rules.d/70-persistent-net.rules
+
+9.5 Install the kernel-header package
+sudo dpkg -i /opt/archives/linux-headers-*.deb
+
+9.6 Delete Qt5 and related files
+Execute the following commands：
+su root
+cd /
+rm -rf usr/local/Trolltech/Qt-5.10.0-rk64one usr/local/Trolltech/Qt-5.10.0-rk64one-sdk usr/bin/setqt5env* usr/bin/qt5demo etc/qt5
+rm -rf opt/{qt5-browser,Qt5_CinematicExperience,qt5-multi-screen-demo,qt5-nmapper,qt5-player,qt5-smarthome,QtE-Demo,qt5-qml-image-viewer,dual-camera}
+
+https://wiki.friendlyelec.com/wiki/index.php/CM3588
+
+14/26
+
+28/08/2025, 12:38
+
+CM3588 - FriendlyELEC WiKi
+
+10 How to Compile
+10.1 Setup Development Environment
+10.1.1 Method 1: Using docker to cross-compile
+Please refre to docker-cross-compiler-novnc (https://github.com/friendlyarm/docker-cross-compiler-novnc)
+10.1.2 Method 2: Setup build environment on the host machine
+10.1.2.1 Install required packages
+
+Install and run requirements ubuntu 20.04, install required packages using the following commands:
+sudo apt-get -y update
+sudo apt-get install -y sudo curl
+sudo bash -c \
+"$(curl -fsSL https://raw.githubusercontent.com/friendlyarm/build-env-on-ubuntu-bionic/master/install.sh)"
+
+The following cross-compilers will be installed:
+Version Architecture
+
+Compiler path
+
+Purpose
+
+4.9.3
+
+armhf
+
+/opt/FriendlyARM/toolchain/4.9.3
+
+Can be used to build 32-bit ARM applications
+
+6.4
+
+aarch64
+
+/opt/FriendlyARM/toolchain/6.4-aarch64 Can be used to build kernel 4.4
+
+11.3
+
+aarch64
+
+/opt/FriendlyARM/toolchain/11.3-aarch64 Can be used to build kernel 4.19 or higher and U-Boot
+
+10.1.2.2 Setting the compiler path
+
+Based on the table in the previous section, select the appropriate version of the compiler and add the compiler's path to PATH. For example, if you want to use the 11.3
+cross-compiler, edit ~/.bashrc using vi and add the following content to the end:
+export PATH=/opt/FriendlyARM/toolchain/11.3-aarch64/bin:$PATH
+export GCC_COLORS=auto
+
+Run the ~/.bashrc script to make it effective in the current commandline. Note: there is a space after ".":
+. ~/.bashrc
+
+To verify if the installation was successful：
+$ aarch64-linux-gcc -v
+Using built-in specs.
+COLLECT_GCC=aarch64-linux-gcc
+COLLECT_LTO_WRAPPER=/opt/FriendlyARM/toolchain/11.3-aarch64/libexec/gcc/aarch64-cortexa53-linux-gnu/11.3.0/lto-wrapper
+Target: aarch64-cortexa53-linux-gnu
+Configured with: /home/cross/arm64/src/gcc/configure --build=x86_64-build_pc-linux-gnu --host=x86_64-build_pc-linux-gnu --target=aarch64-cortexa53-linux-gnu --prefix=/o
+Thread model: posix
+Supported LTO compression algorithms: zlib
+gcc version 11.3.0 (ctng-1.25.0-119g-FA)
+
+10.2 Build Openwrt/Friendlywrt
+10.2.1 Download Code
+Two versions are available, please choose as required:
+10.2.1.1 FriendlyWrt 24.10
+
+mkdir friendlywrt24-rk3588
+cd friendlywrt24-rk3588
+git clone https://github.com/friendlyarm/repo --depth 1 tools
+tools/repo init -u https://github.com/friendlyarm/friendlywrt_manifests -b master-v24.10 \
+-m rk3588.xml --repo-url=https://github.com/friendlyarm/repo --no-clone-bundle
+tools/repo sync -c --no-clone-bundle
+
+10.2.1.2 FriendlyWrt 23.05
+
+mkdir friendlywrt23-rk3588
+cd friendlywrt23-rk3588
+git clone https://github.com/friendlyarm/repo --depth 1 tools
+tools/repo init -u https://github.com/friendlyarm/friendlywrt_manifests -b master-v23.05 \
+-m rk3588.xml --repo-url=https://github.com/friendlyarm/repo --no-clone-bundle
+tools/repo sync -c --no-clone-bundle
+
+10.2.2 First compilation step
+./build.sh rk3588.mk
+
+# or rk3588-docker.mk
+
+All the components (including u-boot, kernel, and friendlywrt) are compiled and the sd card image will be generated, then execute the following command to generate
+the image file for installing the system into the emmc:
+https://wiki.friendlyelec.com/wiki/index.php/CM3588
+
+15/26
+
+28/08/2025, 12:38
+
+CM3588 - FriendlyELEC WiKi
+
+./build.sh emmc-img
+
+After making changes to the project, the sd card image needs to be repackaged by running the following command:
+./build.sh sd-img
+
+10.2.3 Secondary compilation steps
+cd friendlywrt
+make menuconfig
+rm -rf ./tmp
+make -j${nproc}
+cd ../
+./build.sh sd-img
+./build.sh emmc-img
+
+10.2.4 Build u-boot only
+./build.sh uboot
+
+10.2.5 Build kernel only
+./build.sh kernel
+
+10.2.6 Build friendlywrt only
+./build.sh friendlywrt
+
+Or go to the friendlywrt directory and follow the standard openwrt commands. If you get an error with the above command, try using the following command to
+compile in a single thread:
+cd friendlywrt
+make -j1 V=s
+
+10.3 Build Buildroot
+please refer to: Buildroot
+
+https://wiki.friendlyelec.com/wiki/index.php/CM3588
+
+16/26
+
+28/08/2025, 12:38
+
+CM3588 - FriendlyELEC WiKi
+
+10.4 Build Other Linux
+10.4.1 Kernel and u-boot versions
+Operating
+System
+buildroot
+
+Kernel U-boot CrossVersion version compiler
+
+Partition type
+
+Packaging Tool
+
+Kernel branch
+
+sd-fuse
+nanopi5-v5.10.y_opt
+GPT (https://github.com/friendlyarm/sd(https://github.com/friendlyarm/sd- (https://github.com/friendly
+fuse_rk3588/blob/master/prebuilt/parameter.template)
+fuse_rk3588/tree/master)
+rockchip/tree/nanopi5-v5.10
+
+linux
+v5.10.y
+
+GPT (https://github.com/friendlyarm/sdfuse_rk3588/blob/kernel-6.1.y/prebuilt/parameterext4.txt)
+
+openmediavaultarm64
+ubuntu-nobledesktop-arm64
+ubuntu-nobleminimal-arm64
+ubuntu-jammyx11-desktoparm64
+ubuntu-focaldesktop-arm64
+friendlycorefocal-arm64
+debianbookworm-corearm64
+
+linux
+v6.1.y
+
+u-boot
+11.3v2017.09 aarch64
+GPT (https://github.com/friendlyarm/sdfuse_rk3588/blob/kernel6.1.y/prebuilt/parameter.template)
+
+sd-fuse
+nanopi6-v6.1.y
+(https://github.com/friendlyarm/sd- (https://github.com/friendly
+fuse_rk3588/tree/kernel-6.1.y)
+rockchip/tree/nanopi6-v6.1.
+
+debian-bullseyedesktop-arm64
+debian-bullseyeminimal-arm64
+friendlywrt21
+friendlywrt21docker
+friendlywrt23
+friendlywrt23docker
+Kernel git repo：https://github.com/friendlyarm/kernel-rockchip
+U-boot git repo：https://github.com/friendlyarm/uboot-rockchip
+The cross-compile toolchain is located in the path: /opt/FriendlyARM/toolchain/
+The sd-fuse (https://github.com/friendlyarm/sd-fuse_rk3588/tree/kernel-6.1.y) is a helper script to make bootable SD card image.
+10.4.2 Build kernel linux-v6.1.y
+Clone the repository to your local drive then build:
+git clone https://github.com/friendlyarm/kernel-rockchip --single-branch --depth 1 -b nanopi6-v6.1.y kernel-rockchip
+cd kernel-rockchip
+export PATH=/opt/FriendlyARM/toolchain/11.3-aarch64/bin/:$PATH
+touch .scmversion
+# Configuring the Kernel
+# Load default configuration
+make CROSS_COMPILE=aarch64-linux-gnu- ARCH=arm64 nanopi6_linux_defconfig
+# Optionally, load configuration for FriendlyWrt
+# make CROSS_COMPILE=aarch64-linux-gnu- ARCH=arm64 nanopi6_linux_defconfig friendlywrt.config
+# Optionally, if you want to change the default kernel config
+# make CROSS_COMPILE=aarch64-linux-gnu- ARCH=arm64 menuconfig
+# Start building kernel
+make CROSS_COMPILE=aarch64-linux-gnu- ARCH=arm64 nanopi6-images -j$(nproc)
+# Start building kernel modules
+mkdir -p out-modules && rm -rf out-modules/*
+make CROSS_COMPILE=aarch64-linux-gnu- ARCH=arm64 INSTALL_MOD_PATH="$PWD/out-modules" modules -j$(nproc)
+make CROSS_COMPILE=aarch64-linux-gnu- ARCH=arm64 INSTALL_MOD_PATH="$PWD/out-modules" modules_install
+KERNEL_VER=$(make CROSS_COMPILE=aarch64-linux-gnu- ARCH=arm64 kernelrelease)
+[ ! -f "$PWD/out-modules/lib/modules/${KERNEL_VER}/modules.dep" ] && depmod -b $PWD/out-modules -E Module.symvers -F System.map -w ${KERNEL_VER}
+(cd $PWD/out-modules && find . -name \*.ko | xargs aarch64-linux-strip --strip-unneeded)
+
+The generated files:
+kernel.img resource.img boot.img This img is deprecated The kernel modules are located in the out-modules directory
+Run your build:
+Please refre to #Running the build
+10.4.3 Build u-boot v2017.09
+Clone the repository to your local drive then build:
+git clone https://github.com/friendlyarm/rkbin --single-branch --depth 1 -b nanopi6
+git clone https://github.com/friendlyarm/uboot-rockchip --single-branch --depth 1 -b nanopi6-v2017.09
+export PATH=/opt/FriendlyARM/toolchain/11.3-aarch64/bin/:$PATH
+cd uboot-rockchip/
+./make.sh nanopi6
+
+https://wiki.friendlyelec.com/wiki/index.php/CM3588
+
+17/26
+
+28/08/2025, 12:38
+
+CM3588 - FriendlyELEC WiKi
+
+After the compilation, the following files will be generated:
+uboot.img rk3588_spl_loader_xx.yy.zzz.bin (aka MiniLoaderAll.bin)
+Run your build:
+Please refre to #Running the build
+10.4.4 Running the build
+10.4.4.1 Install to target board
+
+RK3588 uses GPT partitions by default, you can use the dd command, but be careful to choose the right output device:
+The SD/TF Card device node: /dev/mmcblk0
+The eMMC device node: /dev/mmcblk2
+Use the 'parted' command to view the partition layout:
+parted /dev/mmcblk2 print
+
+Sample outputs:
+Model: MMC A3A551 (sd/mmc)
+Disk /dev/mmcblk2: 31.0GB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags:
+Number
+1
+2
+3
+4
+5
+6
+7
+8
+
+Start
+8389kB
+12.6MB
+16.8MB
+21.0MB
+37.7MB
+79.7MB
+113MB
+147MB
+
+End
+12.6MB
+16.8MB
+21.0MB
+37.7MB
+79.7MB
+113MB
+147MB
+31.0GB
+
+Size
+4194kB
+4194kB
+4194kB
+16.8MB
+41.9MB
+33.6MB
+33.6MB
+30.9GB
+
+File system
+
+ext4
+
+Name
+uboot
+misc
+dtbo
+resource
+kernel
+boot
+recovery
+rootfs
+
+Flags
+
+as shown above, the resource partition is located at 4 and the kernel partition is located at 5. Use the dd command to write the resource.img and kernel.img files to these
+partitions, the commands are as follows:
+dd if=resource.img of=/dev/mmcblk2p4 bs=1M
+dd if=kernel.img of=/dev/mmcblk2p5 bs=1M
+
+If you want to update u-boot:
+dd if=uboot.img of=/dev/mmcblk2p1 bs=1M
+
+To update new driver modules, copy the newly compiled driver modules to the appropriate directory under /lib/modules.
+10.4.4.2 Packaging and creating an SD image
+
+To create a new OS image file, you need to use the "sd-fuse" packaging tool.
+"sd-fuse" is a collection of scripts that can be used to create bootable SD card images for FriendlyElec boards. Its main features include:
+Creation of root filesystem images from a directory
+Building of bootable SD card images
+Simple compilation of kernel, U-Boot, and third-party drivers
+Please click on the following link to find out more:
+Kernel version
+linux v6.1.y
+
+Packaging Tool
+sd-fuse_rk3588 (https://github.com/friendlyarm/sd-fuse_rk3588/tree/kernel-6.1.y)
+
+10.4.4.3 USB flashing
+10.4.4.3.1 Linux
+
+Reboot the board and enter loader mode with the following command:
+sudo reboot loader
+
+To flash U-Boot and kernel using the "upgrade_tool_v2.17_for_linux" tool, please use the following command:
+sudo upgrade_tool di -k kernel.img
+sudo upgrade_tool di -re resource.img
+sudo upgrade_tool di -u uboot.img
+sudo upgrade_tool RD
+
+Note: "upgrade_tool" is a command-line tool provided by Rockchip for Linux operating systems (Linux_Upgrade_Tool).
+
+https://wiki.friendlyelec.com/wiki/index.php/CM3588
+
+18/26
+
+28/08/2025, 12:38
+
+CM3588 - FriendlyELEC WiKi
+
+10.5 Build the code using scripts
+10.5.1 Download scripts and image files
+git clone https://github.com/friendlyarm/sd-fuse_rk3588.git --single-branch -b kernel-6.1.y
+cd sd-fuse_rk3588
+tar xvzf /path/to/netdrive/03_Partition\ image\ files/friendlycore-focal-arm64-images.tgz
+
+10.5.2 Compile the kernel
+Download the kernel source code and compile it. the relevant image files in the friendlycore-focal-arm64 directory will be automatically updated, including the kernel
+modules in the file system:
+git clone https://github.com/friendlyarm/kernel-rockchip --depth 1 -b nanopi6-v6.1.y kernel-rk3588
+KERNEL_SRC=$PWD/kernel-rk3588 ./build-kernel.sh friendlycore-focal-arm64
+
+10.5.3 Compile the kernel headers
+git clone https://github.com/friendlyarm/kernel-rockchip --depth 1 -b nanopi6-v6.1.y kernel-rk3588
+MK_HEADERS_DEB=1 BUILD_THIRD_PARTY_DRIVER=0 KERNEL_SRC=$PWD/kernel-rk3588 ./build-kernel.sh friendlycore-focal-arm64
+
+10.5.4 Compile the uboot
+Download the uboot source code and compile it. the relevant image files in the friendlycore-focal-arm64 directory will be automatically updated:
+git clone https://github.com/friendlyarm/uboot-rockchip --depth 1 -b nanopi6-v2017.09
+UBOOT_SRC=$PWD/uboot-rockchip ./build-uboot.sh friendlycore-focal-arm64
+
+10.5.5 Generate new image
+Repackage the image file in the friendlycore-focal-arm64 directory into sd card image:
+./mk-sd-image.sh friendlycore-focal-arm64
+
+After the command is completed, the image is in the out directory, you can use the dd command to make the SD boot card, for example:
+dd if=out/rk3588-sd-friendlycore-focal-5.10-arm64-YYYYMMDD.img of=/dev/sdX bs=1M
+
+10.6 Building AOSP from source
+10.6.1 Hardware and Software Requirements
+Your computer should have at least 32GB of RAM and 300GB of disk space. We recommend using a machine with 64GB of RAM and a large-capacity, highspeed SSD, and we do not recommend using virtual machines.
+If you encounter compilation errors, they may be caused by problems with the compilation environment. We recommend using the following Docker container
+for compilation: docker-cross-compiler-novnc (https://github.com/friendlyarm/docker-cross-compiler-novnc).
+10.6.2 Download source from the netdrive
+Netdisk URL: Click here (http://download.friendlyelec.com/CM3588)
+File location on netdisk："07_Source codes/rk35xx-android14-xxxxxxx-YYYYMMDD.tgz" (YYYYMMDD represents the date of the package, and xxxxxxx
+represents the final commit-id)
+Unzip and fetch updates:
+tar xzf '/path/to/netdisk/07_Source codes/rk35xx-android14-xxxxxxx-YYYYMMDD.tgz'
+cd rk35xx-android14
+[ -d .git ] && git pull
+
+10.6.3 Tablet profile build (First Build)
+echo "ROCKCHIP_DEVICE_DIR := device/rockchip/rk3588/nanopi6" > .rockchip_device.mk
+## If you need to build WiFi Display, please uncomment and run the following command:
+# echo "ROCKCHIP_WIFI_DISPLAY := yes" >> .rockchip_device.mk
+## If you need to build a version with pre-installed Google apps, please uncomment and run the following command:
+# echo "INSTALL_GAPPS_FOR_TESTING := yes" >> .rockchip_device.mk
+## If you need to add support for the EC20 4G module, please uncomment and run the following command:
+# echo "BUILD_WITH_EC20 := yes" >> .rockchip_device.mk
+## Initialize the environment and start building:
+export BUILD_NUMBER=$(date +"6%y%m%d")1
+. setenv.sh
+./build.sh -FMu
+
+If you want to generate an OTA update package, please add the `-O` option when running the build.sh command:
+./build.sh -FMuO
+
+If a build error occurs, try the following commands:
+# Continue building with a single thread
+make -j1
+
+https://wiki.friendlyelec.com/wiki/index.php/CM3588
+
+19/26
+
+28/08/2025, 12:38
+
+CM3588 - FriendlyELEC WiKi
+
+# If no errors occur, run build.sh again to package the images
+./build.sh -FMu
+
+10.6.4 TV profile build (First Build)
+echo "ROCKCHIP_DEVICE_DIR := device/rockchip/rk3588/nanopi6_box" > .rockchip_device.mk
+## If you need to build a version with pre-installed Google apps, please uncomment and run the following command:
+# echo "INSTALL_GAPPS_FOR_TESTING := yes" >> .rockchip_device.mk
+## Initialize the environment and start building:
+export BUILD_NUMBER=$(date +"6%y%m%d")1
+. setenv.sh
+./build.sh -FMu
+
+If a build error occurs, try the following commands:
+# Continue building with a single thread
+make -j1
+# If no errors occur, run build.sh again to package the images
+./build.sh -FMu
+
+10.6.5 Second build
+. setenv.sh
+./build.sh -FMu
+
+If you need to clean before building:
+. setenv.sh
+make installclean
+rm -rf out/dists out/target/product/nanopi3/*
+./build.sh -FMu
+
+10.6.6 Running your AOSP build
+After the Android compilation is completed, the image file will be stored in the rockdev/Image-aosp_nanopi3 subdirectory of the Android source code directory.
+10.6.6.1 USB Flashing
+
+Use the rockchip tool to flash the following file: rockdev/Image-aosp_nanopi3/update.img
+10.6.6.2 SD-to-eMMC Flashing
+
+Refer to the following steps：
+1) Insert the SD card of the eflasher system into the host;
+2) Copy the files in the rockdev/Image-aosp_nanopi3 directory to the android14 or androidtv directory in the FRIENDLYARM partition of the SD card:
+sudo cp -af parameter.txt config.cfg MiniLoaderAll.bin uboot.img \
+dtbo.img vbmeta.img boot.img \
+misc.img pcba_small_misc.img pcba_whole_misc.img \
+baseparameter.img super.img /media/$USER/FriendlyARM/android14
+
+3) The Image-aosp_nanopi3 directory does not contain **idbloader.img**. You can download it from here:
+cd /media/$USER/FriendlyARM/android14
+[ -f idbloader.img ]
+
+4) Insert the SD card into CM3588 and re-flash;
+10.6.7 Pack the new SD Image
+git clone https://github.com/friendlyarm/sd-fuse_rk3588.git
+SDFUSE=$PWD/sd-fuse_rk3588
+mkdir $SDFUSE/android14
+cd /path/to/rk35xx-android14/rockdev/Image-aosp_nanopi3
+cp -af parameter.txt config.cfg MiniLoaderAll.bin uboot.img \
+dtbo.img vbmeta.img boot.img \
+misc.img pcba_small_misc.img pcba_whole_misc.img \
+baseparameter.img super.img $SDFUSE/android14
+wget http://112.124.9.243/dvdfiles/rk3588/tools/idbloader.img -O $SDFUSE/android14/idbloader.img
+cd $SDFUSE/
+./mk-sd-image.sh android14
+# Extract the eFlasher system image from the downloaded archive
+tar xvzf /path/to/netdrive/03_Partition\ image\ files/emmc-flasher-images.tgz
+./mk-emmc-image.sh android14
+
+For more information, please refer to #Packaging and creating an SD image
+
+11 Using On-Board Hardware Resources
+11.1 VPU
+Please refer to NPU
+https://wiki.friendlyelec.com/wiki/index.php/CM3588
+
+20/26
+
+28/08/2025, 12:38
+
+CM3588 - FriendlyELEC WiKi
+
+11.2 NPU
+Please refer to NPU
+
+11.3 DTS files
+Please refer to DTS files
+
+11.4 GPIO
+Please refer to GPIO Programming: Using the libgpiod Library
+
+11.5 Serial Port
+The kernel has enabled the following serial ports for testing by default (should be based on kernel dts configuration), to use more serial ports you can configure the
+kernel dts yourself:
+CPU
+RK3588
+
+Model
+
+Port
+
+Device Node
+
+NanoPC-T6 / NanoPC-T6-LTS / NanoPi-M6 / CM3588 UART6 /dev/ttyS6
+
+RK3588S NanoPi-R6S / NanoPi-R6C
+
+UART5 /dev/ttyS5
+
+11.6 ADC
+The file node corresponding to channel2 is shown below, this ADC can be used to query the input voltage of USB-C:
+Channel Node
+Channel 2 /sys/devices/platform/fec10000.saradc/iio:device0/in_voltage2_raw
+
+11.7 PWM
+11.7.1 NanoPC-T6
+Pin32 is configured as PWM by default
+11.7.2 NanoPi-R6C
+Pin29 is configured as PWM by default
+
+11.8 RTC
+You can access RTC by calling APIs under the "/sys/class/rtc/rtc0/" directory. For instance you can check the current RTC time by running the following commands:
+cat /sys/class/rtc/rtc0/date
+# 2018-10-20
+cat /sys/class/rtc/rtc0/time
+# 08:20:14
+
+11.9 Watch dog
+Operating the watchdog is simple: open the device /dev/watchdog and write a character to it periodically. If the system fails to write, the device will automatically
+reboot after a timeout:
+int fd = open("/dev/watchdog", O_WRONLY);
+write(fd, "a", 1);
+
+12 Backup rootfs and create custom SD image (to burn your application into other boards)
+12.1 Backup rootfs
+Run the following commands on your target board. These commands will back up the entire root partition:
+sudo passwd root
+su root
+cd /
+tar --warning=no-file-changed -cvpzf /rootfs.tar.gz \
+--exclude=/rootfs.tar.gz --exclude=/var/lib/docker/runtimes \
+--exclude=/etc/firstuser --exclude=/etc/friendlyelec-release \
+--exclude=/usr/local/first_boot_flag --one-file-system /
+
+Note: if there is a mounted directory on the system, an error message will appear at the end, which can be ignored.
+
+12.2 Making a bootable SD card from a root filesystem
+Run the following script on your Linux PC host, we'll only mention "debian-bullseye-desktop-arm64 os" for brevity, but you can apply the same process for every linux
+OS.
+su root
+git clone https://github.com/friendlyarm/sd-fuse_rk3588 --single-branch -b kernel-6.1.y
+cd sd-fuse_rk3588
+tar xvzf /path/to/netdrive/03_Partition\ image\ files/debian-bullseye-desktop-arm64-images.tgz
+tar xvzf /path/to/netdrive/03_Partition\ image\ files/emmc-eflasher-images.tgz
+
+https://wiki.friendlyelec.com/wiki/index.php/CM3588
+
+21/26
+
+28/08/2025, 12:38
+
+CM3588 - FriendlyELEC WiKi
+
+scp pi@BOARDIP:/rootfs.tar.gz /rootfs.tar.gz
+mkdir rootfs
+tar xvzfp rootfs.tar.gz -C rootfs --numeric-owner --same-owner
+./build-rootfs-img.sh rootfs debian-bullseye-desktop-arm64
+./mk-sd-image.sh debian-bullseye-desktop-arm64
+./mk-emmc-image.sh debian-bullseye-desktop-arm64 autostart=yes
+
+13 Connect NVME SSD High Speed Hard Disk
+13.1 Detection of SSD
+root@FriendlyELEC:~# cat /proc/partitions
+major minor #blocks name
+1
+0
+4096 ram0
+259
+0 125034840 nvme0n1
+
+If there is a nvme0n1 device node it means an SSD is recognized.
+
+13.2 Partition of SSD
+To mount an SSD under Linux we re-partition it as one section by running the following command:
+(echo g; echo n; echo p; echo 1; echo ""; echo ""; echo w; echo q) | fdisk /dev/nvme0n1
+
+If you want to re-partition it to multiple sections you can run "fdisk /dev/nvme0n1". For more detail about this command refer to the fdisk's manual.
+
+13.3 Format Section to EXT4
+After an SSD is successfully partitioned you can check its sections by running "cat /proc/partitions". The /dev/nvme0n1p1 section is used to store data:
+root@FriendlyELEC:~# cat /proc/partitions
+major minor #blocks name
+1
+259
+259
+
+0
+0
+2
+
+4096 ram0
+125034840 nvme0n1
+125033816 nvme0n1p1
+
+The following command formats a section to ext4:
+mkfs.ext4 /dev/nvme0n1p1
+
+13.4 Auto Mount SSD on System Startup
+Before we mount an SSD's section you need to know its Block ID. You can check it by running "blkid":
+blkid /dev/nvme0n1p1
+/dev/nvme0n1p1: UUID="d15c4bbf-a6c3-486f-8f81-35a8dbd46057" TYPE="ext4" PARTUUID="887628f0-01"
+
+Add a "Block ID" to "/etc/fstab" and here is what it looks like
+UUID=<Block ID> /media/nvme ext4 defaults 0 0
+
+You need to replace <Block ID> with the UUID obtained by running "blkid". To mount the SSD in our example we made the "/etc/fstab" file as follows:
+UUID=d15c4bbf-a6c3-486f-8f81-35a8dbd46057 /media/nvme ext4 defaults 0 0
+
+We want to mount an SSD to "/media/nvme" but this directory doesn't exist. Therefore we create it and change its access right by running the following commands:
+mkdir -p /media/nvme
+chmod 777 /media/nvme
+
+Run "mount" to check if the SSD is mounted successfully:
+mount /media/nvme
+
+You can reboot your board to check if your SSD will be automatically mounted:
+reboot
+
+14 Common Linux-based operating system operations
+14.1 Using ADB on Linux Systems
+14.1.1 Enabling ADB in Buildroot System
+Enable on Startup
+https://wiki.friendlyelec.com/wiki/index.php/CM3588
+
+22/26
+
+28/08/2025, 12:38
+
+CM3588 - FriendlyELEC WiKi
+
+mv /etc/init.d/K50usbdevice.sh /etc/init.d/S50usbdevice.sh
+reboot
+
+Enable Temporarily
+usbdevice-wrapper start
+
+14.1.2 Enabling ADB in Ubuntu and Debian Systems
+Enable on Startup
+sudo systemctl enable usbdevice
+sudo reboot
+
+Enable Temporarily
+usbdevice-wrapper start
+
+14.1.3 How to Connect
+When using ADB, the port connected to the computer is the same as the USB flashing port.
+
+14.2 Install Kernel Headers
+To install the .deb file located in the /opt/archives directory:
+sudo dpkg -i /opt/archives/linux-headers-*.deb
+
+To download and update the kernel header files online:
+wget http://112.124.9.243/archives/rk3588/linux-headers-$(uname -r)-latest.deb
+sudo dpkg -i ./linux-headers-latest.deb
+You can visit http://112.124.9.243/archives/rk3588 to see which kernel deb packages are available.
+
+14.3 Update Kernel to Latest Version
+This will update the kernel to the latest version and update the kernel and resource partitions, as well as the kernel modules:
+wget http://112.124.9.243/archives/rk3588/linux-image-$(uname -r)-latest.deb
+sudo dpkg -i ./linux-image-latest.deb
+sudo reboot
+
+14.4 Setting Kernel Boot Parameters (eMMC/UFS Only)
+Flash the firmware file XXXX-eflasher-multiple-os-YYYYMMDD-30g.img.gz to a TF card, then insert the TF card into your computer. Windows will usually
+recognize the TF card partition automatically (formatted as exFAT). For Linux or Mac users, manually mount the first partition of the TF card. Assuming the TF card’s
+device name is /dev/sdX, mount /dev/sdX1.
+Edit the info.conf configuration file in the OS directory on the TF card, adding the bootargs-ext parameter. For example:
+bootargs-ext=rockchipdrm.fb_max_sz=2048
+
+To remove a specified parameter, set it to empty. For example, to remove the userdata parameter:
+bootargs-ext=userdata=
+
+After editing, use this TF card to flash the system to eMMC/UFS Only.
+To set kernel boot parameters during the creation of a mass production card, refer to the following script (example for RK3588): https://github.com/friendlyarm/sdfuse_rk3588/blob/kernel-6.1.y/test/test-custom-bootargs.sh
+
+15 Unbricking Method
+If the ROM is not installed correctly, causing the development board to become bricked, and you might not have the opportunity to reinstall the ROM via an SD card,
+you need to enter Maskrom mode to unbrick it by erasing the storage device.
+
+https://wiki.friendlyelec.com/wiki/index.php/CM3588
+
+23/26
+
+28/08/2025, 12:38
+
+CM3588 - FriendlyELEC WiKi
+
+15.1 Windows Users
+15.1.1 Download Required Files
+Get the necessary tools: Visit here (https://dl.friendlyelec.com/CM3588), find RKDevTool_v3.37_for_window.zip and DriverAssitant_v5.12.zip in the
+05_Tools directory, and download them to your local machine.
+Install Rockchip USB driver and RKDevTool: Extract DriverAssitant_v5.12.zip to install the Rockchip USB driver, and extract
+RKDevTool_v3.37_for_window.zip to obtain the Rockchip flashing tool RKDevTool.
+Get the loader: Visit here (http://112.124.9.243/dvdfiles/), enter the tools directory corresponding to your CPU model, and download MiniLoaderAll.bin.
+15.1.2 Enter Maskrom Mode to Erase the Storage Device
+Remove the SD card, USB device, and other peripherals from the development board
+Start RKDevTool on your computer.
+Press and hold the “Mask” key, power on the board. After the status LED has been on for at least 3 seconds, release the Mask key
+Use a USB C-to-A cable, connect CM3588 to a PC
+
+You will see Found One MASKROM Device displayed at the bottom of the RKDevTool interface, as shown below:
+
+Click the Advanced Function tab in the RKDevTool interface.
+In the Boot text box, select MiniLoaderAll.bin, then click the Download button.
+Select EMMC, click Switch Storage, then click the EraseAll button to erase the eMMC.
+
+(Optional): If your CM3588 has SPI Nor Flash, select SPINOR, click Switch Storage, then click the EraseAll button to erase the SPI Nor Flash.
+
+https://wiki.friendlyelec.com/wiki/index.php/CM3588
+
+24/26
+
+28/08/2025, 12:38
+
+CM3588 - FriendlyELEC WiKi
+
+At this point, CM3588 is restored to its initial state and can be normally booted via SD card or eMMC.
+
+15.2 Linux Users
+15.2.1 Download the Required Files
+Get the necessary tools: Visit here (https://dl.friendlyelec.com/CM3588) and find upgrade_tool_v2.30_for_linux.tgz in the 05_Tools directory and download it
+locally.
+Get the loader: Visit here (http://112.124.9.243/dvdfiles/), enter the tools directory corresponding to your CPU model, and download MiniLoaderAll.bin.
+15.2.2 Installation for upgrade_tool
+Using the following commands:
+tar xzf upgrade_tool_v2.30_for_linux.tgz
+cd upgrade_tool_v2.30_for_linux
+sudo cp upgrade_tool /usr/local/sbin/
+sudo chmod 755 /usr/local/sbin/upgrade_tool
+
+15.2.3 Enter Maskrom Mode to Erase the Storage Device
+Connect CM3588 to the computer using a USB data cable.
+Disconnect the power from CM3588, hold down the MASK button, connect the power, and release the button after 4 seconds.
+Check the connection with the following command:
+upgrade_tool LD
+
+A result similar to "DevNo=1 Vid=0x2207,Pid=0x350b,LocationID=13 Mode=Maskrom SerialNo=" indicates that the device has been detected.
+Erase the eMMC with the following command:
+upgrade_tool EF MiniLoaderAll.bin
+
+(Optional): If your CM3588 has SPI Nor Flash, erase the SPI Nor Flash with the following commands:
+upgrade_tool DB MiniLoaderAll.bin
+upgrade_tool SSD
+# Select 5, SPINOR
+dd if=/dev/zero of=zero.img bs=1M count=16
+upgrade_tool WL 0 zero.img
+
+# For 16M NOR FLASH
+
+At this point, CM3588 has been restored to its initial state and can boot the system normally via SD card or eMMC.
+
+15.3 Mac Users
+Our tests found that upgrade_tool_v2.25 does not work properly on macOS. Therefore, we recommend using Windows or Linux unless an updated version of
+upgrade_tool becomes available.
+
+16 How to use CAM415 MIPI Camera
+Refer to：
+Camera
+DTS files
+
+17 Link to Rockchip Resources
+Rockchip RK3588 Datasheet V1.7-20231117.pdf (https://wiki.friendlyelec.com/wiki/images/9/95/Rockchip_RK3588_Datasheet_V1.7-20231117.pdf)
+
+18 Schematic, PCB CAD File
+CM3588 Schematic: https://wiki.friendlyelec.com/wiki/images/0/00/CM3588_2309_SCH.PDF
+CM3588 PinDelay: https://wiki.friendlyelec.com/wiki/images/8/81/CM3588_Net_PinDelay.pdf
+CM3588 PCB CAD File：https://wiki.friendlyelec.com/wiki/images/f/f5/CM3588_2309_DXF.zip
+CM3588 Pinout and Interfaces https://wiki.friendlyelec.com/wiki/images/3/37/CM3588_Pinout_Interfaces.pdf
+CM3588 NAS Kit Schematic: https://wiki.friendlyelec.com/wiki/images/1/15/CM3588_NAS_SDK_2309_SCH.PDF
+https://wiki.friendlyelec.com/wiki/index.php/CM3588
+
+25/26
+
+28/08/2025, 12:38
+
+CM3588 - FriendlyELEC WiKi
+
+CM3588 NAS Kit PCB CAD File: https://wiki.friendlyelec.com/wiki/images/f/fe/CM3588_NAS_SDK_2309_DXF.zip
+CM3588 NAS Kit PCB layout PDF File: https://wiki.friendlyelec.com/wiki/images/2/2c/CM3588_NAS_SDK_2309_PCB_Layout.pdf
+CM3588 NAS Kit 3D File: https://wiki.friendlyelec.com/wiki/images/2/21/CM3588_NAS_SDK_2309_3D_stp.zip
+
+19 Update Logs
+19.1 2023-11-20
+Initial Release
+
+19.2 2023-11-28
+upload CM3588 pinout and interfaces document.
+
+19.3 2023-12-13
+upload CM3588 PinDelay document.
+Retrieved from "https://wiki.friendlyelec.com/wiki/index.php?title=CM3588&oldid=27357"
+
+This page was last modified on 15 August 2025, at 09:15.
+
+https://wiki.friendlyelec.com/wiki/index.php/CM3588
+
+26/26
+
+

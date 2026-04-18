@@ -9,8 +9,8 @@ Converting Large Language Models requires significant RAM and standard GPU resou
 - **OS:** Ubuntu 20.04 or 22.04 (Native or WSL2)
 - **RAM:** Minimum 16GB (32GB+ recommended)
 - **Software:** 
-  - Python 3.8 or 3.10
-  - Conda/Miniconda
+  - Python 3.8
+  - Python venv
 
 ### Target Environment (CM3588)
 - Up-to-date RK3588 kernel and NPU driver (v0.9.8+ recommended for LLMs).
@@ -24,18 +24,19 @@ Converting Large Language Models requires significant RAM and standard GPU resou
    ```bash
    git clone https://github.com/airockchip/rknn-llm.git
    cd rknn-llm
+   git reset 8623edd0559a07e7127876d685f2b7ca8b83590c --hard
    ```
 
-2. Create a Conda environment and install dependencies:
+2. Create a Python virtual environment and install dependencies:
    ```bash
-   conda create -n rkllm python=3.10
-   conda activate rkllm
-   pip install -r rkllm-toolkit/packages/requirements_cp310.txt
+   python3.8 -m venv rkllm_env
+   source rkllm_env/bin/activate
+   pip install -U pip
    ```
 
 3. Install the RKLLM Toolkit wheel:
    ```bash
-   pip install rkllm-toolkit/packages/rkllm_toolkit-1.0.X-cp310-cp310-linux_x86_64.whl
+   pip install rkllm-toolkit/packages/rkllm_toolkit-1.1.4-cp38-cp38-linux_x86_64.whl
    ```
 
 ---
@@ -81,7 +82,7 @@ ret = rkllm.build(
     do_quantization=True,
     optimization_level=1,
     quantized_dtype='w4a16', # Optimal for RK3588 memory
-    target_platforms=['rk3588']
+    target_platform='rk3588'
 )
 if ret != 0:
     print("Build model failed!")
